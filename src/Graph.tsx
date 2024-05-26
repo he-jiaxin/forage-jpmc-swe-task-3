@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from '@finos/perspective';
+import { Table, TableData } from '@finos/perspective';
 import { ServerRespond } from './DataStreamer';
 import { DataManipulator } from './DataManipulator';
 import './Graph.css';
@@ -47,17 +47,21 @@ class Graph extends Component<IProps, {}> {
         top_ask_price: 'avg',
         top_bid_price: 'avg',
         timestamp: 'distinct count',
+        upper_bound: 'avg',
+        lower_bound: 'avg',
+        trigger_alert: 'avg'
       }));
     }
   }
 
   componentDidUpdate() {
     if (this.table) {
-      this.table.update(
-        DataManipulator.generateRow(this.props.data),
-      );
+        this.table.update([
+            DataManipulator.generateRow(this.props.data),
+        ] as unknown as TableData);
     }
-  }
 }
+}
+
 
 export default Graph;
